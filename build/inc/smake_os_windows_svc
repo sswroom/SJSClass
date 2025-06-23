@@ -1,2 +1,0 @@
-ConsoleStartup.o: ../../startup/MingwSvcStartup.cpp
-	
