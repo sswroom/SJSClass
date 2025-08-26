@@ -2276,7 +2276,15 @@ export class TimeInstant
 			let ns = (t1 / 1000) - Math.floor(t1 / 1000) + (t2 / 1000) - Math.floor(t2 / 1000);
 			if (ns >= 1)
 				ns -= 1;
-			return new TimeInstant(secs, Math.round(ns * 1000000000));
+			let n = Date.now();
+			if (secs == Math.floor(n))
+			{
+				return new TimeInstant(secs, Math.round(ns * 1000000000));
+			}
+			else
+			{
+				return TimeInstant.fromTicks(n);
+			}
 		}
 		else
 		{

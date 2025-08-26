@@ -1,4 +1,5 @@
 -Enhance cesium types
+-Fixed time shift on Android after monitor off
 
 1.6.22
 -Enhance map.MapControl Marker
