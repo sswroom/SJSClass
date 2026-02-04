@@ -1,5 +1,7 @@
+1.6.23
 -Enhance cesium types
 -Fixed time shift on Android after monitor off
+-Added geometry.LineString.calcLength
 
 1.6.22
 -Enhance map.MapControl Marker

@@ -1,4 +1,5 @@
 import * as math from "./math.js";
+import * as unit from "./unit.js";
 
 export const VectorType = {
 	Unknown: "Unknown",
@@ -396,6 +397,28 @@ export class LineString extends Vector2D
 			throw new Error("No intersact point in middle y");
 		}
 		return new math.Coord2D(xList[xList.length >> 1], pt.y);
+	}
+
+	/**
+	 * @param {unit.Distance.Unit} distUnit
+	 */
+	calcLength(distUnit)
+	{
+		let csys = math.CoordinateSystemManager.srCreateCsys(this.srid);
+		if (!csys)
+			return null;
+		let totalLength = 0;
+		let i = 1;
+		let lastPt = this.coordinates[0];
+		let thisPt;
+		while (i < this.coordinates.length)
+		{
+			thisPt = this.coordinates[i];
+			totalLength += csys.calcSurfaceDistance(lastPt[0], lastPt[1], thisPt[0], thisPt[1], distUnit);
+			lastPt = thisPt;
+			i++;
+		}
+		return totalLength;
 	}
 }
 

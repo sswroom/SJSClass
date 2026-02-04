@@ -1,4 +1,5 @@
 import * as math from "./math";
+import * as unit from "./unit";
 
 declare class BoundaryPointResult
 {
@@ -70,6 +71,7 @@ export class LineString extends Vector2D
 	hasArea(): boolean;
 	calcHIntersacts(y: double): number[];
 	getDisplayCenter(): math.Coord2D;
+	calcLength(distUnit: unit.Distance.Unit): number | null;
 }
 
 export class LinearRing extends LineString
