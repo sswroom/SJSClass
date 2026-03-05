@@ -32,6 +32,8 @@ builder.writeInt32(0, 1000, true);
 builder.writeInt16(4, 10000, true);
 console.log(text.u8Arr2Hex(builder.build(), " "));
 
+console.log(data.Timestamp.fromStr("03/04/2026 12:34:56")?.toString());
+console.log(data.Timestamp.fromStr("05/03/2026 10:40")?.toString());
 /*let zbuilder = new zip.ZIPBuilder(zip.ZIPOS.UNIX);
 let t = data.Timestamp.now();
 zbuilder.addFile("Testing.txt", new TextEncoder().encode("Testing Testing"), t, t, t, 0);

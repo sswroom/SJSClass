@@ -1,3 +1,7 @@
+1.6.24
+-Support data.DateOrder
+-Support parse time string without second
+
 1.6.23
 -Enhance cesium types
 -Fixed time shift on Android after monitor off

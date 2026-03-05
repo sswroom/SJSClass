@@ -11,6 +11,12 @@ export const Weekday = {
 	Saturday: 6
 }
 
+export const DateOrder = {
+	MDY: 0,
+	DMY: 1,
+	YMD: 2
+}
+
 /**
  * @param {any} o
  */
@@ -578,8 +584,9 @@ export class DateTimeUtil
 	/**
 	 * @param {TimeValue} t
 	 * @param {string[]} dateStrs
+	 * @param {number} dateOrder
 	 */
-	static dateValueSetDate(t, dateStrs)
+	static dateValueSetDate(t, dateStrs, dateOrder)
 	{
 		let vals0 = Number(dateStrs[0]);
 		let vals1 = Number(dateStrs[1]);
@@ -593,7 +600,7 @@ export class DateTimeUtil
 		else if (vals2 > 100)
 		{
 			t.year = vals2;
-			if (vals0 > 12)
+			if (vals0 > 12 || dateOrder == DateOrder.DMY)
 			{
 				t.month = vals1;
 				t.day = vals0;
@@ -604,11 +611,17 @@ export class DateTimeUtil
 				t.day = vals1;
 			}
 		}
-		else if (vals1 > 12)
+		else if (vals1 > 12 || dateOrder == DateOrder.MDY)
 		{
 			t.year = ((Math.floor(t.year / 100) * 100) + vals2);
 			t.month = vals0;
 			t.day = vals1;
+		}
+		else if (dateOrder == DateOrder.DMY)
+		{
+			t.year = ((Math.floor(t.year / 100) * 100) + vals2);
+			t.month = vals1;
+			t.day = vals0;
 		}
 		else
 		{
@@ -1455,13 +1468,25 @@ export class DateTimeUtil
 	/**
 	 * @param {string} dateStr
 	 * @param {number | null|undefined} tzQhr
+	 * @param {number | null|undefined} dateOrder
 	 */
-	static string2TimeValue(dateStr, tzQhr)
+	static string2TimeValue(dateStr, tzQhr, dateOrder)
 	{
 		if (dateStr.length < 4)
 			return null;
 		if (tzQhr == null)
 			tzQhr = DateTimeUtil.getLocalTzQhr();
+		if (dateOrder == null)
+		{
+			if (tzQhr <= -16 || tzQhr >= 40)
+			{
+				dateOrder = DateOrder.MDY;
+			}
+			else
+			{
+				dateOrder = DateOrder.DMY;
+			}
+		}
 		let tval = new TimeValue();
 		tval.nanosec = 0;
 		tval.tzQhr = tzQhr;
@@ -1483,15 +1508,15 @@ export class DateTimeUtil
 			let dateSucc = true;
 			if ((strs = strs2[0].split('-')).length == 3)
 			{
-				DateTimeUtil.dateValueSetDate(tval, strs);
+				DateTimeUtil.dateValueSetDate(tval, strs, dateOrder);
 			}
 			else if ((strs = strs2[0].split('/')).length == 3)
 			{
-				DateTimeUtil.dateValueSetDate(tval, strs);
+				DateTimeUtil.dateValueSetDate(tval, strs, dateOrder);
 			}
 			else if ((strs = strs2[0].split(':')).length == 3)
 			{
-				DateTimeUtil.dateValueSetDate(tval, strs);
+				DateTimeUtil.dateValueSetDate(tval, strs, dateOrder);
 			}
 			else
 			{
@@ -1550,6 +1575,11 @@ export class DateTimeUtil
 				}
 				DateTimeUtil.timeValueSetTime(tval, strs);
 			}
+			else if (strs.length == 2)
+			{
+				strs[2] = "0";
+				DateTimeUtil.timeValueSetTime(tval, strs);
+			}
 			else
 			{
 				tval.hour = 0;
@@ -1566,7 +1596,7 @@ export class DateTimeUtil
 		{
 			if ((strs = strs2[0].split('-')).length == 3)
 			{
-				DateTimeUtil.dateValueSetDate(tval, strs);
+				DateTimeUtil.dateValueSetDate(tval, strs, dateOrder);
 				tval.hour = 0;
 				tval.minute = 0;
 				tval.second = 0;
@@ -1574,7 +1604,7 @@ export class DateTimeUtil
 			}
 			else if ((strs = strs2[0].split('/')).length == 3)
 			{
-				DateTimeUtil.dateValueSetDate(tval, strs);
+				DateTimeUtil.dateValueSetDate(tval, strs, dateOrder);
 				tval.hour = 0;
 				tval.minute = 0;
 				tval.second = 0;
@@ -1710,12 +1740,12 @@ export class DateTimeUtil
 						{
 							if ((strs = strs2[j].split('/')).length == 3)
 							{
-								DateTimeUtil.dateValueSetDate(tval, strs);
+								DateTimeUtil.dateValueSetDate(tval, strs, dateOrder);
 							}
 						}
 						else if ((strs = strs2[j].split('-')).length == 3)
 						{
-							DateTimeUtil.dateValueSetDate(tval, strs);
+							DateTimeUtil.dateValueSetDate(tval, strs, dateOrder);
 						}
 						else if (strs2[j] == "HKT")
 						{
@@ -2122,7 +2152,7 @@ export class LocalDate
 			}
 			else
 			{
-				let tval = DateTimeUtil.string2TimeValue(year, 0);
+				let tval = DateTimeUtil.string2TimeValue(year, null, null);
 				if (tval == null)
 				{
 					this.dateVal = LocalDate.DATE_NULL;
@@ -2245,7 +2275,7 @@ export class LocalDate
 	 */
 	static fromStr(s)
 	{
-		let timeVal = DateTimeUtil.string2TimeValue(s, 0);
+		let timeVal = DateTimeUtil.string2TimeValue(s, null, null);
 		if (timeVal)
 		{
 			return new LocalDate(timeVal.year, timeVal.month, timeVal.day);
@@ -2541,7 +2571,7 @@ export class Timestamp
 	 */
 	static fromStr(str, defTzQhr)
 	{
-		let tval = DateTimeUtil.string2TimeValue(str, defTzQhr);
+		let tval = DateTimeUtil.string2TimeValue(str, defTzQhr, null);
 		if (tval == null)
 		{
 			return null;

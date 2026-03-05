@@ -9,6 +9,13 @@ export enum Weekday
 	Saturday
 }
 
+export enum DateOrder
+{
+	MDY,
+	DMY,
+	YMD
+}
+
 interface StringMap<Type> {
 	[key: string]: Type;
 }
@@ -67,7 +74,7 @@ export class DateTimeUtil
 {
 	static monString: string[];
 	static monthString: string[];
-	static dateValueSetDate(t: DateValue, dateStrs: string[]): void;
+	static dateValueSetDate(t: DateValue, dateStrs: string[], dateOrder: DateOrder): void;
 	static timeValueSetTime(t: TimeValue, timeStrs: string[]): void;
 	static date2TotalDays(year: number, month: number, day: number): number;
 	static dateValue2TotalDays(d: DateValue): number;
@@ -79,7 +86,7 @@ export class DateTimeUtil
 	static instant2TimeValue(secs: bigint, nanosec: number, tzQhr?: number): TimeValue;
 	static ticks2Weekday(ticks: number, tzQhr: number): Weekday;
 	static toString(tval: TimeValue, pattern: string): string;
-	static string2TimeValue(dateStr: string, tzQhr?: number): TimeValue;
+	static string2TimeValue(dateStr: string, tzQhr?: number, dateOrder?: DateOrder): TimeValue;
 	static timeValueFromYMDHMS(ymdhms: number | bigint): TimeValue | null;
 	static isYearLeap(year: number): boolean;
 	static parseYearStr(year: string): number;

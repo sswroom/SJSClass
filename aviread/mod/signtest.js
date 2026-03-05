@@ -1,8 +1,8 @@
 import * as web from "/js/@sswroom/sswr/web.js";
 
 let signDowned = false;
-let signCurrX;
-let signCurrY;
+let signCurrX = 0;
+let signCurrY = 0;
 /**
  * @param {MouseEvent} ev
  */
@@ -37,11 +37,14 @@ function onSignMouseMove(ev)
 	{
 		let signCanvas = web.getCanvasElement("signCanvas");
 		let ctx = signCanvas.getContext("2d");
-		ctx.strokeStyle = "black";
-		ctx.beginPath();
-		ctx.moveTo(signCurrX, signCurrY);
-		ctx.lineTo(ev.offsetX, ev.offsetY);
-		ctx.stroke();
+		if (ctx != null)
+		{
+			ctx.strokeStyle = "black";
+			ctx.beginPath();
+			ctx.moveTo(signCurrX, signCurrY);
+			ctx.lineTo(ev.offsetX, ev.offsetY);
+			ctx.stroke();
+		}
 		signCurrX = ev.offsetX;
 		signCurrY = ev.offsetY;
 	}
@@ -51,8 +54,11 @@ function onClearClicked()
 {
 	let signCanvas = web.getCanvasElement("signCanvas");
 	let ctx = signCanvas.getContext("2d");
-	ctx.fillStyle = "white";
-	ctx.fillRect(0, 0, signCanvas.width, signCanvas.height);
+	if (ctx != null)
+	{
+		ctx.fillStyle = "white";
+		ctx.fillRect(0, 0, signCanvas.width, signCanvas.height);
+	}
 }
 
 function onOutputClicked()
