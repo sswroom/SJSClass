@@ -75,7 +75,7 @@ export function newObjFromGeoJSON(geoJSON)
 	let props = new Array();
 	for (n in geoJSON.properties)
 	{
-		props.push(text.toHTMLText(n)+": "+text.toHTMLText(geoJSON.properties[n]));
+		props.push(text.toHTMLText(n)+": "+text.toHTMLText(String(geoJSON.properties[n])));
 	}
 	o.description = props.join("<br/>");
 	return o;
@@ -122,6 +122,51 @@ export function addGeoJSON(viewer, geoJSON, color, extSize)
 					viewer.entities.add(o);
 					i++;
 				}
+			}
+			else if (geoJSON.geometry.type == "MultiPolygon")
+			{
+				let coordinates = geoJSON.geometry.coordinates;
+				let i = 0;
+				let j = coordinates.length;
+				while (i < j)
+				{
+					let k = 0;
+					let l = coordinates[i].length;
+					while (k < l)
+					{
+						o = newObjFromGeoJSON(geoJSON);
+						o.id = o.id + "_" + i + "_" + k;
+						o.polygon = new Object();
+						o.polygon.hierarchy = toCartesian3Arr(coordinates[i][k]);
+						o.polygon.height = -extSize;
+						o.polygon.heightReference = Cesium.HeightReference.RELATIVE_TO_GROUND;
+						o.polygon.extrudedHeight = 10 + extSize;
+						o.polygon.extrudedHeightReference = Cesium.HeightReference.RELATIVE_TO_GROUND;
+						o.polygon.material = color;
+						o.polygon.outline = true;
+						o.polygon.outlineColor = oColor;
+						o.polygon.closeTop = false;
+						o.polygon.closeBottom = false;
+						viewer.entities.add(o);
+						k++;
+					}
+					i++;
+				}
+			}
+			else if (geoJSON.geometry.type == "Point")
+			{
+				let coordinates = geoJSON.geometry.coordinates;
+				o = newObjFromGeoJSON(geoJSON);
+				o.point = new Object();
+				o.point.pixelSize = 10;
+				o.point.color = color;
+				o.point.heightReference = Cesium.HeightReference.RELATIVE_TO_GROUND;
+				o.position = Cesium.Cartesian3.fromDegrees(coordinates[0], coordinates[1]);
+				viewer.entities.add(o);
+			}
+			else
+			{
+				console.log("Unsupported GeoJSON geometry type", geoJSON.geometry.type);
 			}
 		}
 	}

@@ -1,3 +1,5 @@
+-cesium support more GeoJSON type
+
 1.6.24
 -Support data.DateOrder
 -Support parse time string without second
