@@ -135,6 +135,7 @@ export function getInputElement(id: string): HTMLInputElement;
 export function getMediaElement(id: string): HTMLMediaElement;
 export function getSelectElement(id: string): HTMLSelectElement;
 export function getSpanElement(id: string): HTMLSpanElement;
+export function getTextAreaElement(id: string): HTMLTextAreaElement;
 export function getVideoElement(id: string): HTMLVideoElement;
 export function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob|null>;
 export function elementToSVGString(node: Element, width: string | number, height: string | number): string;

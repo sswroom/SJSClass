@@ -1100,6 +1100,20 @@ export function getSpanElement(id)
 
 /**
  * @param {string} id
+ * @returns {HTMLTextAreaElement}
+ */
+export function getTextAreaElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLTextAreaElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not a text area element");
+}
+
+/**
+ * @param {string} id
  * @returns {HTMLVideoElement}
  */
 export function getVideoElement(id)

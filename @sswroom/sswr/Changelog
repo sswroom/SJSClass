@@ -1,3 +1,5 @@
+-Added web.getTextAreaElement
+
 1.6.25
 -cesium support more GeoJSON type
 -Added web.getAudioElement
