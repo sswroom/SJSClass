@@ -1,4 +1,9 @@
+1.6.25
 -cesium support more GeoJSON type
+-Added web.getAudioElement
+-Added web.getHeadingElement
+-Added web.getMediaElement
+-Added web.getVideoElement
 
 1.6.24
 -Support data.DateOrder

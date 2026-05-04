@@ -284,7 +284,7 @@ export function parseCSSColor(c)
 		if (funcName == 'rgb')
 		{
 			let funcCont = c.substring(i + 1, c.length - 1).trim();
-			let color = {a: 1.0};
+			let color = {a: 1.0, r: 0.0, g: 0.0, b: 0.0};
 			i = funcCont.indexOf("/");
 			if (i >= 0)
 			{
@@ -298,12 +298,6 @@ export function parseCSSColor(c)
 				color.r = toRatio(rgb[0], 255);
 				color.g = toRatio(rgb[1], 255);
 				color.b = toRatio(rgb[2], 255);
-			}
-			else
-			{
-				color.r = 0;
-				color.g = 0;
-				color.b = 0;
 			}
 			return color;
 		}
@@ -966,30 +960,16 @@ export async function getCacheSize(name)
 
 /**
  * @param {string} id
- * @returns {HTMLInputElement}
+ * @returns {HTMLAudioElement}
  */
-export function getInputElement(id)
+export function getAudioElement(id)
 {
 	let ele = document.getElementById(id);
 	if (ele == null)
 		throw new Error("Element with id \""+id+"\" not found");
-	if (ele instanceof HTMLInputElement)
+	if (ele instanceof HTMLAudioElement)
 		return ele;
-	throw new Error("Element with id \""+id+"\" is not an input");
-}
-
-/**
- * @param {string} id
- * @returns {HTMLSelectElement}
- */
-export function getSelectElement(id)
-{
-	let ele = document.getElementById(id);
-	if (ele == null)
-		throw new Error("Element with id \""+id+"\" not found");
-	if (ele instanceof HTMLSelectElement)
-		return ele;
-	throw new Error("Element with id \""+id+"\" is not a select");
+	throw new Error("Element with id \""+id+"\" is not an audio element");
 }
 
 /**
@@ -1008,6 +988,20 @@ export function getButtonElement(id)
 
 /**
  * @param {string} id
+ * @returns {HTMLCanvasElement}
+ */
+export function getCanvasElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLCanvasElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not a canvas");
+}
+
+/**
+ * @param {string} id
  * @returns {HTMLDivElement}
  */
 export function getDivElement(id)
@@ -1018,6 +1012,76 @@ export function getDivElement(id)
 	if (ele instanceof HTMLDivElement)
 		return ele;
 	throw new Error("Element with id \""+id+"\" is not a div");
+}
+
+/**
+ * @param {string} id
+ * @returns {HTMLHeadingElement}
+ */
+export function getHeadingElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLHeadingElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not a heading");
+}
+
+/**
+ * @param {string} id
+ * @returns {HTMLImageElement}
+ */
+export function getImgElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLImageElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not an img");
+}
+
+/**
+ * @param {string} id
+ * @returns {HTMLInputElement}
+ */
+export function getInputElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLInputElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not an input");
+}
+
+/**
+ * @param {string} id
+ * @returns {HTMLMediaElement}
+ */
+export function getMediaElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLMediaElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not a media element");
+}
+
+/**
+ * @param {string} id
+ * @returns {HTMLSelectElement}
+ */
+export function getSelectElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLSelectElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not a select");
 }
 
 /**
@@ -1036,30 +1100,16 @@ export function getSpanElement(id)
 
 /**
  * @param {string} id
- * @returns {HTMLCanvasElement}
+ * @returns {HTMLVideoElement}
  */
-export function getCanvasElement(id)
+export function getVideoElement(id)
 {
 	let ele = document.getElementById(id);
 	if (ele == null)
 		throw new Error("Element with id \""+id+"\" not found");
-	if (ele instanceof HTMLCanvasElement)
+	if (ele instanceof HTMLVideoElement)
 		return ele;
-	throw new Error("Element with id \""+id+"\" is not a canvas");
-}
-
-/**
- * @param {string} id
- * @returns {HTMLImageElement}
- */
-export function getImgElement(id)
-{
-	let ele = document.getElementById(id);
-	if (ele == null)
-		throw new Error("Element with id \""+id+"\" not found");
-	if (ele instanceof HTMLImageElement)
-		return ele;
-	throw new Error("Element with id \""+id+"\" is not an img");
+	throw new Error("Element with id \""+id+"\" is not a video element");
 }
 
 /**
@@ -1214,6 +1264,7 @@ export async function getBrowserInfo()
  */
 export function parseUserAgent(userAgent)
 {
+	/** @type {{os: string; osVer?: string; browser: string; browserVer?: string; devName?: string;}} */
 	let ent = {os: OSType.Unknown, browser: BrowserType.Unknown};
 	let i;
 	if (userAgent == "Microsoft Windows Network Diagnostics")
