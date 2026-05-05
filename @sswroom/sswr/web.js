@@ -1100,6 +1100,20 @@ export function getSpanElement(id)
 
 /**
  * @param {string} id
+ * @returns {HTMLTableCellElement}
+ */
+export function getTableCellElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLTableCellElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not a table cell element");
+}
+
+/**
+ * @param {string} id
  * @returns {HTMLTextAreaElement}
  */
 export function getTextAreaElement(id)

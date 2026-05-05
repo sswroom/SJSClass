@@ -1,3 +1,4 @@
+-Added web.getTableCellElement
 -Added web.getTextAreaElement
 
 1.6.25
