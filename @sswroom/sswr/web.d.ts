@@ -133,6 +133,7 @@ export function getHeadingElement(id: string): HTMLHeadingElement;
 export function getImgElement(id: string): HTMLImageElement;
 export function getInputElement(id: string): HTMLInputElement;
 export function getMediaElement(id: string): HTMLMediaElement;
+export function getParagraphElement(id: string): HTMLParagraphElement;
 export function getSelectElement(id: string): HTMLSelectElement;
 export function getSpanElement(id: string): HTMLSpanElement;
 export function getTableCellElement(id: string): HTMLTableCellElement;

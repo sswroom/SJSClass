@@ -1,5 +1,6 @@
 -Added web.getTableCellElement
 -Added web.getTextAreaElement
+-Added web.getParagraphElement
 
 1.6.25
 -cesium support more GeoJSON type

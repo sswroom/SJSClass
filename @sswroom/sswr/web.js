@@ -1072,6 +1072,20 @@ export function getMediaElement(id)
 
 /**
  * @param {string} id
+ * @returns {HTMLParagraphElement}
+ */
+export function getParagraphElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLParagraphElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not a paragraph element");
+}
+
+/**
+ * @param {string} id
  * @returns {HTMLSelectElement}
  */
 export function getSelectElement(id)
