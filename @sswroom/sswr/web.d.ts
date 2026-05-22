@@ -129,6 +129,7 @@ export function getAudioElement(id: string): HTMLAudioElement;
 export function getButtonElement(id: string): HTMLButtonElement;
 export function getCanvasElement(id: string): HTMLCanvasElement;
 export function getDivElement(id: string): HTMLDivElement;
+export function getFormElement(id: string): HTMLFormElement;
 export function getHeadingElement(id: string): HTMLHeadingElement;
 export function getImgElement(id: string): HTMLImageElement;
 export function getInputElement(id: string): HTMLInputElement;

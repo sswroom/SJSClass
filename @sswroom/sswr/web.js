@@ -1016,6 +1016,20 @@ export function getDivElement(id)
 
 /**
  * @param {string} id
+ * @returns {HTMLFormElement}
+ */
+export function getFormElement(id)
+{
+	let ele = document.getElementById(id);
+	if (ele == null)
+		throw new Error("Element with id \""+id+"\" not found");
+	if (ele instanceof HTMLFormElement)
+		return ele;
+	throw new Error("Element with id \""+id+"\" is not a form");
+}
+
+/**
+ * @param {string} id
  * @returns {HTMLHeadingElement}
  */
 export function getHeadingElement(id)
@@ -1025,7 +1039,7 @@ export function getHeadingElement(id)
 		throw new Error("Element with id \""+id+"\" not found");
 	if (ele instanceof HTMLHeadingElement)
 		return ele;
-	throw new Error("Element with id \""+id+"\" is not a heading");
+	throw new Error("Element with id \""+id+"\" is not a heading element");
 }
 
 /**
@@ -1039,7 +1053,7 @@ export function getImgElement(id)
 		throw new Error("Element with id \""+id+"\" not found");
 	if (ele instanceof HTMLImageElement)
 		return ele;
-	throw new Error("Element with id \""+id+"\" is not an img");
+	throw new Error("Element with id \""+id+"\" is not an image element");
 }
 
 /**
@@ -1053,7 +1067,7 @@ export function getInputElement(id)
 		throw new Error("Element with id \""+id+"\" not found");
 	if (ele instanceof HTMLInputElement)
 		return ele;
-	throw new Error("Element with id \""+id+"\" is not an input");
+	throw new Error("Element with id \""+id+"\" is not an input element");
 }
 
 /**
@@ -1095,7 +1109,7 @@ export function getSelectElement(id)
 		throw new Error("Element with id \""+id+"\" not found");
 	if (ele instanceof HTMLSelectElement)
 		return ele;
-	throw new Error("Element with id \""+id+"\" is not a select");
+	throw new Error("Element with id \""+id+"\" is not a select element");
 }
 
 /**
@@ -1109,7 +1123,7 @@ export function getSpanElement(id)
 		throw new Error("Element with id \""+id+"\" not found");
 	if (ele instanceof HTMLSpanElement)
 		return ele;
-	throw new Error("Element with id \""+id+"\" is not a span");
+	throw new Error("Element with id \""+id+"\" is not a span element");
 }
 
 /**
