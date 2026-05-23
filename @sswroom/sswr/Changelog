@@ -1,3 +1,4 @@
+1.6.26
 -Added web.getFormElement
 -Added web.getTableCellElement
 -Added web.getTextAreaElement
